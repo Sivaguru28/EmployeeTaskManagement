@@ -1,10 +1,12 @@
 ﻿using EmployeeTaskManagement.API.Common;
+using EmployeeTaskManagement.API.DTOs.Employee.Requests;
+using EmployeeTaskManagement.API.DTOs.Employee.Responses;
 using EmployeeTaskManagement.API.Models;
 
 namespace EmployeeTaskManagement.API.Services.Interfaces
 {
-    public class IEmployeeService
+    public interface IEmployeeService
     {
-        Task<Result<Emplo>> GetAllEmployee(CancellationToken token);
+        Task<Result<GetEmployeeListResponse>> GetEmployeeListAsync(GetEmployeeListRequest request,CancellationToken token);
     }
 }

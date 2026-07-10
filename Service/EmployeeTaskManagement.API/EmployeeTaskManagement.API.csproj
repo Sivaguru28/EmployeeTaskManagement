@@ -22,16 +22,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="DTOs\Auth\Request\" />
-    <Folder Include="DTOs\Auth\Response\" />
-    <Folder Include="DTOs\Dashboard\Request\" />
-    <Folder Include="DTOs\Dashboard\Response\" />
-    <Folder Include="DTOs\Employee\Response\" />
-    <Folder Include="DTOs\Employee\Request\" />
-    <Folder Include="DTOs\Task\Request\" />
-    <Folder Include="DTOs\Task\Response\" />
-    <Folder Include="Middleware\" />
+    <Folder Include="DTOs\Auth\Requests\" />
+    <Folder Include="DTOs\Auth\Responses\" />
+    <Folder Include="DTOs\Dashboard\Requests\" />
+    <Folder Include="DTOs\Dashboard\Responses\" />
+    <Folder Include="DTOs\Task\Requests\" />
+    <Folder Include="DTOs\Task\Responses\" />
     <Folder Include="Helpers\" />
     <Folder Include="Extensions\" />
     <Folder Include="Configurations\" />
