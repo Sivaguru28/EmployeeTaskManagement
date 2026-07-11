@@ -1,4 +1,4 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using EmployeeTaskManagement.API.Common;
@@ -8,7 +8,6 @@ using EmployeeTaskManagement.API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
 using EmployeeTaskManagement.API.Common.Attributes;
 
 namespace EmployeeTaskManagement.API.Services.Implementation
@@ -17,14 +16,18 @@ namespace EmployeeTaskManagement.API.Services.Implementation
     public class AuthService : IAuthService
     {
         readonly IConfiguration _configuration;
-        public AuthService(IConfiguration configuration) { 
+        readonly ILogger<AuthService> _logger;
+
+        public AuthService(IConfiguration configuration, ILogger<AuthService> logger) { 
             _configuration = configuration;
+            _logger = logger;
         }
 
         public async Task<Result<LoginResponse>> LoginAsync(LoginRequest request, CancellationToken token) 
         {
             if (request.UserName != "admin" || request.Password != "Admin@123") 
             { 
+                _logger.LogWarning("Failed login attempt for user: {Username}. Invalid credentials.", request.UserName);
                 return Result<LoginResponse>.FailureResult(System.Net.HttpStatusCode.Unauthorized, "Invalid username or password");
             }
             var JwtSettings = _configuration.GetSection("JwtSettings");
@@ -62,6 +65,7 @@ namespace EmployeeTaskManagement.API.Services.Implementation
                 Expiration = expirationTime
             };
 
+            _logger.LogInformation("User {Username} logged in successfully.", request.UserName);
             return Result<LoginResponse>.SuccessResult(responseData, "Authentication successful.");
         }
 
