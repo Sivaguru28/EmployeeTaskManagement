@@ -1,6 +1,16 @@
 -- =======================================================
 -- 1. Table Creation Scripts (with constraints, PKs, FKs)
 -- =======================================================
+IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = N'EmployeeTaskManagement')
+BEGIN
+    CREATE DATABASE EmployeeTaskManagement;
+    PRINT 'Database [EmployeeTaskManagement] created.';
+END
+ELSE
+BEGIN
+    PRINT 'Database [EmployeeTaskManagement] already exists. Skipping creation.';
+END
+GO
 
 -- Create Employees Table
 IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Employees]') AND type in (N'U'))
@@ -36,6 +46,7 @@ BEGIN
         [StartDate] DATETIME2(7) NOT NULL,
         [DueDate] DATETIME2(7) NOT NULL,
         [EstimatedHours] DECIMAL(18,2) NOT NULL,
+		[IsActive] BIT NOT NULL CONSTRAINT DF_Employees_IsActive     DEFAULT 1,
         [CreatedDate] DATETIME2(7) NOT NULL CONSTRAINT [DF_EmployeeTasks_CreatedDate] DEFAULT (SYSUTCDATETIME()),
         CONSTRAINT [PK_EmployeeTasks] PRIMARY KEY CLUSTERED ([EmployeeTaskId] ASC),
         CONSTRAINT [FK_EmployeeTasks_Employees_EmployeeId] FOREIGN KEY ([EmployeeId]) REFERENCES [dbo].[Employees] ([EmployeeId]) ON DELETE NO ACTION
