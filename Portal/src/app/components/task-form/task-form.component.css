@@ -1,0 +1,19 @@
+.modal-backdrop {
+  background-color: #0f172a;
+  opacity: 0.35 !important;
+  backdrop-filter: blur(2px);
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #2563eb !important;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15) !important;
+}
+
+.modal-content {
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+}
+
+.border-secondary-subtle {
+  border-color: #cbd5e1 !important;
+}

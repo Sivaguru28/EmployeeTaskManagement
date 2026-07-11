@@ -1,0 +1,79 @@
+input:focus, select:focus {
+  border-color: #2563eb !important;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15) !important;
+}
+
+.table th {
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  border-bottom-width: 1px;
+  border-bottom-color: #e2e8f0 !important;
+  color: #475569 !important;
+}
+
+.table td {
+  border-bottom-color: #f1f5f9 !important;
+}
+
+.py-1-5 {
+  padding-top: 0.35rem !important;
+  padding-bottom: 0.35rem !important;
+}
+
+.px-2-5 {
+  padding-left: 0.65rem !important;
+  padding-right: 0.65rem !important;
+}
+
+.gap-0\.5 {
+  gap: 0.125rem;
+}
+
+.max-w-desc {
+  max-width: 250px;
+}
+
+/* Overdue highlights (High contrast border warning) */
+.overdue-row {
+  background-color: rgba(220, 53, 69, 0.02) !important;
+}
+
+/* Styled inline selectors */
+.select-status {
+  max-width: 140px;
+  font-weight: 500;
+  border-radius: 6px;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.status-completed {
+  border-color: #0dcaf0 !important;
+  color: #0dcaf0 !important;
+}
+
+.status-inprogress {
+  border-color: #ffc107 !important;
+  color: #d97706 !important; /* darker amber */
+}
+
+.status-pending {
+  border-color: #cbd5e1 !important;
+  color: #64748b !important;
+}
+
+.bg-danger-subtle {
+  background-color: rgba(220, 53, 69, 0.1) !important;
+}
+
+.bg-warning-subtle {
+  background-color: rgba(217, 119, 6, 0.1) !important;
+}
+
+.bg-info-subtle {
+  background-color: rgba(13, 202, 240, 0.1) !important;
+}
+
+.border-secondary-subtle {
+  border-color: #cbd5e1 !important;
+}

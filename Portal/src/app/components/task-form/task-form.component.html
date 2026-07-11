@@ -1,0 +1,169 @@
+<div class="modal-backdrop fade show" *ngIf="visible"></div>
+
+<div class="modal fade show d-block" tabindex="-1" role="dialog" *ngIf="visible">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content bg-white border-light text-dark rounded-4 shadow-lg">
+
+      <!-- Modal Header -->
+      <div class="modal-header border-light p-4">
+        <h5 class="modal-title fw-bold text-dark">
+          <i class="pi pi-file-edit text-primary me-2"></i>
+          {{ task ? 'Edit Task' : 'Create Task' }}
+        </h5>
+        <button type="button" class="btn-close" (click)="onCancel()" aria-label="Close"></button>
+      </div>
+
+      <!-- Modal Body Form -->
+      <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+        <div class="modal-body p-4">
+
+          <!-- Custom form group error alerts -->
+          <div *ngIf="taskForm.errors?.['invalidDateRange'] && taskForm.touched"
+            class="alert alert-danger py-2 mb-3 small d-flex align-items-center gap-2">
+            <i class="pi pi-exclamation-triangle"></i>
+            <span>Due Date cannot be earlier than Start Date.</span>
+          </div>
+
+          <div *ngIf="taskForm.errors?.['completedToPending'] && taskForm.touched"
+            class="alert alert-danger py-2 mb-3 small d-flex align-items-center gap-2">
+            <i class="pi pi-exclamation-triangle"></i>
+            <span>A Completed task cannot be changed back to Pending.</span>
+          </div>
+
+          <div class="row g-3">
+
+            <!-- Assigned Employee -->
+            <div class="col-12 col-md-6">
+              <label for="employeeId" class="form-label text-muted small fw-medium d-block mb-2">Assign Employee *</label>
+              <p-dropdown [options]="employees" formControlName="employeeId"
+                optionValue="employeeId" [filter]="true" filterBy="firstName,lastName,employeeCode"
+                placeholder="Select Employee" scrollHeight="200px"
+                styleClass="w-100 bg-white text-dark border-secondary-subtle"
+                [class.is-invalid]="taskForm.get('employeeId')?.touched && taskForm.get('employeeId')?.invalid">
+                <ng-template let-emp pTemplate="selectedItem">
+                  <span *ngIf="emp">
+                    {{ emp.firstName }} {{ emp.lastName }} ({{ emp.employeeCode }})
+                  </span>
+                </ng-template>
+                <ng-template let-emp pTemplate="item">
+                  <span>
+                    {{ emp.firstName }} {{ emp.lastName }} ({{ emp.employeeCode }})
+                  </span>
+                </ng-template>
+              </p-dropdown>
+              <div class="invalid-feedback d-block" *ngIf="taskForm.get('employeeId')?.touched && taskForm.get('employeeId')?.errors?.['required']">
+                Please select an employee.
+              </div>
+            </div>
+
+            <!-- Task Title -->
+            <div class="col-12 col-md-6">
+              <label for="title" class="form-label text-muted small fw-medium">Task Title *</label>
+              <input type="text" id="title" formControlName="title"
+                class="form-control bg-white text-dark border-secondary-subtle"
+                [class.is-invalid]="taskForm.get('title')?.touched && taskForm.get('title')?.invalid"
+                placeholder="Implement Auth API">
+              <div class="invalid-feedback" *ngIf="taskForm.get('title')?.errors?.['required']">
+                Task Title is required.
+              </div>
+              <div class="invalid-feedback" *ngIf="taskForm.get('title')?.errors?.['maxlength']">
+                Title cannot exceed 200 characters.
+              </div>
+            </div>
+
+            <!-- Priority -->
+            <div class="col-12 col-md-6">
+              <label for="priority" class="form-label text-muted small fw-medium">Priority *</label>
+              <select id="priority" formControlName="priority"
+                class="form-select bg-white text-dark border-secondary-subtle"
+                [class.is-invalid]="taskForm.get('priority')?.touched && taskForm.get('priority')?.invalid">
+                <option value="" disabled>Select Priority</option>
+                <option *ngFor="let pri of priorities" [value]="pri">{{ pri }}</option>
+              </select>
+              <div class="invalid-feedback" *ngIf="taskForm.get('priority')?.errors?.['required']">
+                Priority selection is required.
+              </div>
+            </div>
+
+            <!-- Status -->
+            <div class="col-12 col-md-6">
+              <label for="status" class="form-label text-muted small fw-medium">Status *</label>
+              <select id="status" formControlName="status"
+                class="form-select bg-white text-dark border-secondary-subtle"
+                [class.is-invalid]="taskForm.get('status')?.touched && taskForm.get('status')?.invalid">
+                <option value="" disabled>Select Status</option>
+                <option *ngFor="let stat of statuses" [value]="stat"
+                  [disabled]="task && task.status === 'Completed' && stat === 'Pending'">
+                  {{ stat }}
+                </option>
+              </select>
+              <div class="invalid-feedback" *ngIf="taskForm.get('status')?.errors?.['required']">
+                Status selection is required.
+              </div>
+            </div>
+
+            <!-- Start Date -->
+            <div class="col-12 col-md-6">
+              <label for="startDate" class="form-label text-muted small fw-medium">Start Date *</label>
+              <input type="date" id="startDate" formControlName="startDate"
+                class="form-control bg-white text-dark border-secondary-subtle"
+                [class.is-invalid]="taskForm.get('startDate')?.touched && taskForm.get('startDate')?.invalid">
+              <div class="invalid-feedback" *ngIf="taskForm.get('startDate')?.errors?.['required']">
+                Start Date is required.
+              </div>
+            </div>
+
+            <!-- Due Date -->
+            <div class="col-12 col-md-6">
+              <label for="dueDate" class="form-label text-muted small fw-medium">Due Date *</label>
+              <input type="date" id="dueDate" formControlName="dueDate"
+                class="form-control bg-white text-dark border-secondary-subtle"
+                [class.is-invalid]="taskForm.get('dueDate')?.touched && taskForm.get('dueDate')?.invalid">
+              <div class="invalid-feedback" *ngIf="taskForm.get('dueDate')?.errors?.['required']">
+                Due Date is required.
+              </div>
+            </div>
+
+            <!-- Estimated Hours -->
+            <div class="col-12 col-md-6">
+              <label for="estimatedHours" class="form-label text-muted small fw-medium">Estimated Hours *</label>
+              <input type="number" id="estimatedHours" formControlName="estimatedHours"
+                class="form-control bg-white text-dark border-secondary-subtle"
+                [class.is-invalid]="taskForm.get('estimatedHours')?.touched && taskForm.get('estimatedHours')?.invalid"
+                placeholder="12.5" step="0.5">
+              <div class="invalid-feedback" *ngIf="taskForm.get('estimatedHours')?.errors?.['required']">
+                Estimated Hours are required.
+              </div>
+              <div class="invalid-feedback" *ngIf="taskForm.get('estimatedHours')?.errors?.['min']">
+                Estimated Hours cannot be negative.
+              </div>
+              <div class="invalid-feedback" *ngIf="taskForm.get('estimatedHours')?.errors?.['max']">
+                Estimated Hours cannot exceed 1000 hours.
+              </div>
+            </div>
+
+            <!-- Task Description -->
+            <div class="col-12">
+              <label for="description" class="form-label text-muted small fw-medium">Task Description</label>
+              <textarea id="description" formControlName="description" rows="3"
+                class="form-control bg-white text-dark border-secondary-subtle"
+                placeholder="Provide details on deliverables, requirements, and constraints..."></textarea>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="modal-footer border-light p-4">
+          <button type="button" class="btn btn-outline-secondary" (click)="onCancel()">Cancel</button>
+          <button type="submit" class="btn btn-primary px-4 d-flex align-items-center gap-2"
+            [disabled]="taskForm.invalid">
+            <i class="pi pi-check"></i>
+            <span>{{ task ? 'Save Changes' : 'Create Task' }}</span>
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>

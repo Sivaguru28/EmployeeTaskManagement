@@ -1,5 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
 @import "bootstrap/dist/css/bootstrap.min.css";
-@import "primeng/resources/themes/lara-dark-indigo/theme.css";
+@import "primeng/resources/themes/lara-light-indigo/theme.css";
 @import "primeng/resources/primeng.min.css";
 @import "primeicons/primeicons.css";
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  background-color: #f8fafc;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Normalize PrimeNG Dropdown size to match Bootstrap .form-select */
+.p-dropdown {
+  height: 38px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  border-color: #dee2e6 !important;
+  border-radius: 0.375rem !important;
+  background-color: #fff !important;
+}
+.p-dropdown .p-dropdown-label {
+  padding: 0.375rem 0.75rem !important;
+  font-size: 0.9rem !important;
+  color: #212529 !important;
+}
+.p-dropdown .p-dropdown-trigger {
+  width: 2.35rem !important;
+}
+.p-dropdown:not(.p-disabled).p-focus {
+  border-color: #86b7fe !important;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25) !important;
+}
+.p-dropdown-panel .p-dropdown-header {
+  padding: 0.5rem 0.75rem !important;
+}
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+  padding: 0.5rem 0.75rem !important;
+  font-size: 0.9rem !important;
+}
