@@ -1,14 +1,18 @@
 ﻿using EmployeeTaskManagement.API.Common;
+using EmployeeTaskManagement.API.Common.Attributes;
 using EmployeeTaskManagement.API.DTOs.Employee.Requests;
 using EmployeeTaskManagement.API.DTOs.Employee.Responses;
 using EmployeeTaskManagement.API.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace EmployeeTaskManagement.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeService _employeeService;

@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using EmployeeTaskManagement.API.Common;
+using EmployeeTaskManagement.API.Common.Attributes;
 using EmployeeTaskManagement.API.Data;
 using EmployeeTaskManagement.API.DTOs.Employee.Requests;
 using EmployeeTaskManagement.API.DTOs.Employee.Responses;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeTaskManagement.API.Services.Implementation
 {
+    [ScopedService]
     public class EmployeeService : IEmployeeService
     {
         private readonly ApplicationDbContext _context;

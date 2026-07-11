@@ -22,14 +22,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\Auth\Requests\" />
-    <Folder Include="DTOs\Auth\Responses\" />
     <Folder Include="DTOs\Dashboard\Requests\" />
     <Folder Include="DTOs\Dashboard\Responses\" />
     <Folder Include="DTOs\Task\Requests\" />
     <Folder Include="DTOs\Task\Responses\" />
     <Folder Include="Helpers\" />
-    <Folder Include="Extensions\" />
     <Folder Include="Configurations\" />
   </ItemGroup>
 
