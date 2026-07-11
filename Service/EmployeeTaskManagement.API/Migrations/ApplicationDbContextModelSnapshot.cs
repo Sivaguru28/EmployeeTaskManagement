@@ -99,6 +99,9 @@ namespace EmployeeTaskManagement.API.Migrations
                     b.Property<decimal>("EstimatedHours")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Priority")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

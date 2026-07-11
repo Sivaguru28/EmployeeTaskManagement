@@ -1,0 +1,91 @@
+<p-toast position="bottom-right"></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<!-- Global Loading Spinner Overlay -->
+<div *ngIf="loadingService.isLoading()" class="global-spinner-overlay">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<!-- Layout Wrapper (Lite Theme) -->
+<div class="app-layout h-100 d-flex flex-column bg-light-gray" [class.authenticated]="authService.isLoggedIn()">
+
+  <!-- Mobile Header Navbar (Visible only when logged in on small screens) -->
+  <header *ngIf="authService.isLoggedIn()"
+    class="mobile-navbar navbar navbar-expand-lg navbar-light bg-white border-bottom border-light px-3 py-2 d-lg-none">
+    <button (click)="toggleMobileMenu()" class="btn btn-link text-dark p-0 border-0 me-3" type="button">
+      <i class="pi pi-bars fs-4"></i>
+    </button>
+    <div class="d-flex align-items-center gap-2">
+      <i class="pi pi-briefcase text-primary fs-4"></i>
+      <h5 class="m-0 fw-bold">TaskMgmt</h5>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Backdrop Overlay -->
+  <div *ngIf="authService.isLoggedIn() && isMobileMenuOpen" (click)="closeMobileMenu()" class="mobile-drawer-backdrop">
+  </div>
+
+  <!-- Sidebar & Main Content Area -->
+  <div class="d-flex flex-grow-1 overflow-hidden">
+
+    <!-- Sidebar Drawer (Hover to expand on desktop, toggle drawer on mobile) -->
+    <aside *ngIf="authService.isLoggedIn()" class="sidebar bg-white border-end border-light d-flex flex-column p-3"
+      [class.show]="isMobileMenuOpen">
+
+      <!-- Brand Logo Area -->
+      <div class="sidebar-brand d-flex align-items-center gap-2 mb-4 px-1">
+        <i class="pi pi-briefcase text-primary fs-3"></i>
+        <h4 class="m-0 fw-bold brand-text text-dark">TaskMgmt</h4>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="nav nav-pills flex-column gap-2 mb-auto">
+        <a class="nav-link text-secondary d-flex align-items-center gap-3 px-2-5 py-2-5" routerLink="/dashboard"
+          routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="closeMobileMenu()">
+          <i class="pi pi-chart-bar fs-5"></i>
+          <span class="nav-text text-truncate">Dashboard</span>
+        </a>
+        <a class="nav-link text-secondary d-flex align-items-center gap-3 px-2-5 py-2-5" routerLink="/employees"
+          routerLinkActive="active" (click)="closeMobileMenu()">
+          <i class="pi pi-users fs-5"></i>
+          <span class="nav-text text-truncate">Employees</span>
+        </a>
+        <a class="nav-link text-secondary d-flex align-items-center gap-3 px-2-5 py-2-5" routerLink="/tasks"
+          routerLinkActive="active" (click)="closeMobileMenu()">
+          <i class="pi pi-list fs-5"></i>
+          <span class="nav-text text-truncate">Tasks</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Content Area (Light Gray Theme) -->
+    <main class="main-panel d-flex flex-column flex-grow-1 overflow-auto bg-slate-50 text-dark">
+
+      <!-- Top header for desktop (Visible only when logged in on large screens) -->
+      <header *ngIf="authService.isLoggedIn()"
+        class="top-header navbar bg-white border-bottom border-light px-4 py-3 d-none d-lg-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center gap-2">
+          <span class="text-muted small fw-medium">Welcome back, <strong>{{ authService.currentUser() }}</strong></span>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+          <button (click)="logout()"
+            class="btn btn-outline-danger w-100 logout-btn d-flex align-items-center justify-content-center gap-2">
+            <i class="pi pi-sign-out"></i>
+            <span class="nav-text">Logout</span>
+          </button>
+
+          <!-- <span class="text-muted small">Local Time: 2:16 PM</span>
+          <span class="badge bg-success-subtle text-success border border-success px-3 py-1-5 rounded-pill">System Status: Active</span> -->
+        </div>
+      </header>
+
+      <!-- Route Content Panel -->
+      <div [class.p-4]="authService.isLoggedIn()" class="flex-grow-1">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+
+  </div>
+</div>

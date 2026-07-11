@@ -1,0 +1,146 @@
+<div class="modal-backdrop fade show" *ngIf="visible"></div>
+
+<div class="modal fade show d-block" tabindex="-1" role="dialog" *ngIf="visible">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content bg-white border-light text-dark rounded-4 shadow-lg">
+
+      <!-- Modal Header -->
+      <div class="modal-header border-light p-4">
+        <h5 class="modal-title fw-bold text-dark">
+          <i class="pi pi-user-edit text-primary me-2"></i>
+          {{ employee ? 'Edit Employee' : 'Add Employee' }}
+        </h5>
+        <button type="button" class="btn-close" (click)="onCancel()" aria-label="Close"></button>
+      </div>
+
+      <!-- Modal Body Form -->
+      <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+        <div class="modal-body p-4">
+          <div class="row g-3">
+
+            <!-- Employee Code -->
+            <div class="col-12 col-md-6">
+              <label for="employeeCode" class="form-label text-muted small fw-medium">Employee Code *</label>
+              <input type="text" id="employeeCode" formControlName="employeeCode"
+                class="form-control bg-white text-dark border-secondary-subtle"
+                [class.is-invalid]="employeeForm.get('employeeCode')?.touched && employeeForm.get('employeeCode')?.invalid"
+                placeholder="EMP001">
+              <div class="invalid-feedback" *ngIf="employeeForm.get('employeeCode')?.errors?.['required']">
+                Employee Code is required.
+              </div>
+              <div class="invalid-feedback" *ngIf="employeeForm.get('employeeCode')?.errors?.['maxlength']">
+                Employee Code cannot exceed 50 characters.
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="col-12 col-md-6">
+              <label for="email" class="form-label text-muted small fw-medium">Email Address *</label>
+              <input type="email" id="email" formControlName="email"
+                class="form-control bg-white text-dark border-secondary-subtle"
+                [class.is-invalid]="employeeForm.get('email')?.touched && employeeForm.get('email')?.invalid"
+                placeholder="john.doe@company.com">
+              <div class="invalid-feedback" *ngIf="employeeForm.get('email')?.errors?.['required']">
+                Email is required.
+              </div>
+              <div class="invalid-feedback" *ngIf="employeeForm.get('email')?.errors?.['email']">
+                Please enter a valid email address.
+              </div>
+            </div>
+
+            <!-- First Name -->
+            <div class="col-12 col-md-6">
+              <label for="firstName" class="form-label text-muted small fw-medium">First Name *</label>
+              <input type="text" id="firstName" formControlName="firstName"
+                class="form-control bg-white text-dark border-secondary-subtle"
+                [class.is-invalid]="employeeForm.get('firstName')?.touched && employeeForm.get('firstName')?.invalid"
+                placeholder="John">
+              <div class="invalid-feedback" *ngIf="employeeForm.get('firstName')?.errors?.['required']">
+                First Name is required.
+              </div>
+            </div>
+
+            <!-- Last Name -->
+            <div class="col-12 col-md-6">
+              <label for="lastName" class="form-label text-muted small fw-medium">Last Name *</label>
+              <input type="text" id="lastName" formControlName="lastName"
+                class="form-control bg-white text-dark border-secondary-subtle"
+                [class.is-invalid]="employeeForm.get('lastName')?.touched && employeeForm.get('lastName')?.invalid"
+                placeholder="Doe">
+              <div class="invalid-feedback" *ngIf="employeeForm.get('lastName')?.errors?.['required']">
+                Last Name is required.
+              </div>
+            </div>
+
+            <!-- Mobile Number -->
+            <div class="col-12 col-md-6">
+              <label for="mobileNumber" class="form-label text-muted small fw-medium">Mobile Number *</label>
+              <input type="text" id="mobileNumber" formControlName="mobileNumber"
+                class="form-control bg-white text-dark border-secondary-subtle"
+                [class.is-invalid]="employeeForm.get('mobileNumber')?.touched && employeeForm.get('mobileNumber')?.invalid"
+                placeholder="+1234567890">
+              <div class="invalid-feedback" *ngIf="employeeForm.get('mobileNumber')?.errors?.['required']">
+                Mobile Number is required.
+              </div>
+              <div class="invalid-feedback" *ngIf="employeeForm.get('mobileNumber')?.errors?.['pattern']">
+                Invalid phone characters (only numbers, +, -, and spaces allowed).
+              </div>
+            </div>
+
+            <!-- Department -->
+            <div class="col-12 col-md-6">
+              <label for="department" class="form-label text-muted small fw-medium">Department *</label>
+              <select id="department" formControlName="department"
+                class="form-select bg-white text-dark border-secondary-subtle"
+                [class.is-invalid]="employeeForm.get('department')?.touched && employeeForm.get('department')?.invalid">
+                <option value="" disabled>Select Department</option>
+                <option *ngFor="let dept of departments" [value]="dept">{{ dept }}</option>
+              </select>
+              <div class="invalid-feedback" *ngIf="employeeForm.get('department')?.errors?.['required']">
+                Department selection is required.
+              </div>
+            </div>
+
+            <!-- Designation -->
+            <div class="col-12 col-md-6">
+              <label for="designation" class="form-label text-muted small fw-medium">Designation *</label>
+              <input type="text" id="designation" formControlName="designation"
+                class="form-control bg-white text-dark border-secondary-subtle"
+                [class.is-invalid]="employeeForm.get('designation')?.touched && employeeForm.get('designation')?.invalid"
+                placeholder="Software Engineer">
+              <div class="invalid-feedback" *ngIf="employeeForm.get('designation')?.errors?.['required']">
+                Designation is required.
+              </div>
+            </div>
+
+            <!-- Date of Joining -->
+            <div class="col-12 col-md-6">
+              <label for="dateOfJoining" class="form-label text-muted small fw-medium">Date of Joining *</label>
+              <input type="date" id="dateOfJoining" formControlName="dateOfJoining"
+                class="form-control bg-white text-dark border-secondary-subtle"
+                [class.is-invalid]="employeeForm.get('dateOfJoining')?.touched && employeeForm.get('dateOfJoining')?.invalid">
+              <div class="invalid-feedback" *ngIf="employeeForm.get('dateOfJoining')?.errors?.['required']">
+                Date of Joining is required.
+              </div>
+              <div class="invalid-feedback" *ngIf="employeeForm.get('dateOfJoining')?.errors?.['futureDate']">
+                Date of Joining cannot be a future date.
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="modal-footer border-light p-4">
+          <button type="button" class="btn btn-outline-secondary" (click)="onCancel()">Cancel</button>
+          <button type="submit" class="btn btn-primary px-4 d-flex align-items-center gap-2"
+            [disabled]="employeeForm.invalid">
+            <i class="pi pi-check"></i>
+            <span>{{ employee ? 'Save Changes' : 'Create' }}</span>
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>

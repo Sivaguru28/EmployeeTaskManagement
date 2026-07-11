@@ -21,6 +21,7 @@
         public decimal EstimatedHours { get; set; }
 
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+        public bool IsActive { get; set; } 
 
         // Navigation Property
         public Employee Employee { get; set; } = null!;
