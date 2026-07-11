@@ -1,4 +1,5 @@
 using EmployeeTaskManagement.API.Data;
+using EmployeeTaskManagement.API.Extensions;
 using EmployeeTaskManagement.API.Middleware;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddAutomaticServices(); // Automatically register services based on custom attributes
 
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
