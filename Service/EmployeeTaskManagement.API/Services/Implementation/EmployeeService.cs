@@ -109,7 +109,7 @@ namespace EmployeeTaskManagement.API.Services.Implementation
                 return Result<EmployeeDetailsDto>.FailureResult(HttpStatusCode.BadRequest, "Employee Code is already in use by an active employee.");
             }
 
-            if (request.DateOfJoining.Date > DateTime.UtcNow.Date)
+            if (request.DateOfJoining.Date >= DateTime.UtcNow.Date)
             {
                 _logger.LogWarning("Failed to create employee: Joining Date {DateOfJoining} is in the future.", request.DateOfJoining);
                 return Result<EmployeeDetailsDto>.FailureResult(HttpStatusCode.BadRequest, "Joining Date cannot be a future date.");
