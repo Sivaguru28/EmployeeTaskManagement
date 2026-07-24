@@ -1,10 +1,14 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './guards/auth.guard';
+import { LoginComponent } from './components/login/login.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { EmployeeListComponent } from './components/employee-list/employee-list.component';
+import { TaskListComponent } from './components/task-list/task-list.component';
 
 export const routes: Routes = [
   {
     path: 'login',
-    loadComponent: () => import('./components/login/login.component').then(m => m.LoginComponent)
+    component : LoginComponent
   },
   {
     path: '',
@@ -12,15 +16,18 @@ export const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        loadComponent: () => import('./components/dashboard/dashboard.component').then(m => m.DashboardComponent)
+        component : DashboardComponent
+       //loadComponent: () => import('./components/dashboard/dashboard.component').then(m => m.DashboardComponent)
       },
       {
         path: 'employees',
-        loadComponent: () => import('./components/employee-list/employee-list.component').then(m => m.EmployeeListComponent)
+        component : EmployeeListComponent
+        //loadComponent: () => import('./components/employee-list/employee-list.component').then(m => m.EmployeeListComponent)
       },
       {
         path: 'tasks',
-        loadComponent: () => import('./components/task-list/task-list.component').then(m => m.TaskListComponent)
+        component : TaskListComponent
+       // loadComponent: () => import('./components/task-list/task-list.component').then(m => m.TaskListComponent)
       },
       {
         path: '',
