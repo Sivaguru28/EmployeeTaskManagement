@@ -185,7 +185,7 @@ namespace EmployeeTaskManagement.API.Services.Implementation
         public async Task<Result<bool>> DeleteEmployeeAsync(int employeeId, CancellationToken token)
         {
             var EmployeeDetail = _context.Employees.Include(e => e.Tasks).FirstOrDefault(e => e.EmployeeId == employeeId);
-            //var employee = await _context.Employees.FirstOrDefaultAsync(e => e.EmployeeId == employeeId, token);
+            
             if (EmployeeDetail == null)
             {
                 return Result<bool>.FailureResult(HttpStatusCode.NotFound, "Employee not found.");
@@ -194,8 +194,7 @@ namespace EmployeeTaskManagement.API.Services.Implementation
                 List<EmployeeTask> TaskCollection =  EmployeeDetail.Tasks.ToList();
                 foreach (var task in TaskCollection) { 
                     await _taskService.DeleteTaskAsync(task.EmployeeTaskId, token);
-                }
-               
+                }               
             }
 
             EmployeeDetail.IsActive = false;
