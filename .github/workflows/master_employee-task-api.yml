@@ -9,7 +9,7 @@ on:
       - master
     paths:
       - 'Service/**'
-      - '.github/workflows/service_workflow.yml'
+      - '.github/workflows/master_employee-task-api.yml'
   workflow_dispatch:
 
 jobs:
