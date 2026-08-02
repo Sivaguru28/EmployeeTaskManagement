@@ -1,4 +1,5 @@
 using System.Text;
+using EmployeeTaskManagement.API.Configurations;
 using EmployeeTaskManagement.API.Data;
 using EmployeeTaskManagement.API.Extensions;
 using EmployeeTaskManagement.API.Middleware;
@@ -71,6 +72,10 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+
+
+builder.Services.Configure<AzureStorageConfig>(
+    builder.Configuration.GetSection("AzureStorage"));
 
 var JwtSettings = builder.Configuration.GetSection("JwtSettings");
 builder.Services.AddAuthentication(options =>

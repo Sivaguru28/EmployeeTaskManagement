@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Identity" Version="1.21.0" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.29.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.28" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.28" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.28">
@@ -28,7 +30,6 @@
     <Folder Include="DTOs\Task\Requests\" />
     <Folder Include="DTOs\Task\Responses\" />
     <Folder Include="Helpers\" />
-    <Folder Include="Configurations\" />
   </ItemGroup>
 
 </Project>
