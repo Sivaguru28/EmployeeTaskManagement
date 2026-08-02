@@ -74,6 +74,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 
+
 builder.Services.Configure<AzureStorageConfig>(
     builder.Configuration.GetSection("AzureStorage"));
 
