@@ -22,5 +22,13 @@ namespace EmployeeTaskManagement.API.Controllers
 
             return File(stream, "image/jpeg");
         }
+
+        [HttpGet("task-image")]
+        public async Task<IActionResult> GetImage()
+        {
+            var stream = await _blobStorageService.DownloadAsync("task-mgt.jpg");
+
+            return File(stream, "image/jpeg");
+        }
     }
 }
