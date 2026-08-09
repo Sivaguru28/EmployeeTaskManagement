@@ -33,9 +33,20 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 builder.Services.AddAutomaticServices(); // Automatically register services based on custom attributes
 
+if (!builder.Environment.IsDevelopment())
+{
+    var keyVaultUrl = new Uri("https://employee-task-kv.vault.azure.net/");
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    builder.Configuration.AddAzureKeyVault(
+        keyVaultUrl,
+        new DefaultAzureCredential());
+}
+else 
+{
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+}    
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -105,6 +116,7 @@ builder.Services.AddAuthentication(options =>
 });
 
 var app = builder.Build();
+
 
 //Middlewares
 app.UseMiddleware<ExceptionHandlingMiddleware>();
