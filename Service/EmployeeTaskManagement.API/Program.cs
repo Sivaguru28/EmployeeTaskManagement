@@ -23,6 +23,10 @@ builder.Services.AddCors(options =>
         policy.WithOrigins("http://localhost:4200")
               .AllowAnyHeader()
               .AllowAnyMethod();
+
+        policy.WithOrigins("https://polite-water-0834f4600.7.azurestaticapps.net")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
     });
 });
 
