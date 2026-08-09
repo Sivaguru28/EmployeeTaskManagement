@@ -46,7 +46,7 @@ BEGIN
         [StartDate] DATETIME2(7) NOT NULL,
         [DueDate] DATETIME2(7) NOT NULL,
         [EstimatedHours] DECIMAL(18,2) NOT NULL,
-		[IsActive] BIT NOT NULL CONSTRAINT DF_Employees_IsActive     DEFAULT 1,
+		[IsActive] BIT NOT NULL CONSTRAINT DF_EmployeeTask_IsActive     DEFAULT 1,
         [CreatedDate] DATETIME2(7) NOT NULL CONSTRAINT [DF_EmployeeTasks_CreatedDate] DEFAULT (SYSUTCDATETIME()),
         CONSTRAINT [PK_EmployeeTasks] PRIMARY KEY CLUSTERED ([EmployeeTaskId] ASC),
         CONSTRAINT [FK_EmployeeTasks_Employees_EmployeeId] FOREIGN KEY ([EmployeeId]) REFERENCES [dbo].[Employees] ([EmployeeId]) ON DELETE NO ACTION
@@ -62,7 +62,7 @@ IF OBJECT_ID('dbo.GetDashboardStats', 'P') IS NOT NULL
     DROP PROCEDURE dbo.GetDashboardStats;
 GO
 
-ALTER PROCEDURE [dbo].[GetDashboardStats]
+CREATE OR ALTER PROCEDURE [dbo].[GetDashboardStats]
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -120,3 +120,108 @@ END
 -- WHERE t.Status = 'Completed'
 -- GROUP BY e.EmployeeId, e.EmployeeCode, e.FirstName, e.LastName
 -- ORDER BY CompletedTasksCount DESC;
+
+
+EXEC sp_rename 'dbo.Tasks', 'EmployeeTasks';
+
+
+
+
+INSERT INTO dbo.Employees
+(
+    EmployeeCode,
+    FirstName,
+    LastName,
+    Email,
+    MobileNumber,
+    Department,
+    Designation,
+    DateOfJoining
+)
+VALUES
+('EMP001', 'John', 'Doe', 'john.doe@company.com', '9876543210', 'IT', 'Software Engineer', '2024-01-15'),
+
+('EMP002', 'Jane', 'Smith', 'jane.smith@company.com', '9876543211', 'HR', 'HR Executive', '2023-11-20'),
+
+('EMP003', 'Michael', 'Johnson', 'michael.johnson@company.com', '9876543212', 'Finance', 'Accountant', '2022-08-10'),
+
+('EMP004', 'Emily', 'Williams', 'emily.williams@company.com', '9876543213', 'IT', 'Senior Developer', '2021-05-18'),
+
+('EMP005', 'David', 'Brown', 'david.brown@company.com', '9876543214', 'Sales', 'Sales Manager', '2020-09-25');
+
+
+
+INSERT INTO dbo.EmployeeTasks
+(
+    EmployeeId,
+    Title,
+    Description,
+    Priority,
+    Status,
+    StartDate,
+    DueDate,
+    EstimatedHours
+)
+VALUES
+(1,
+'Develop Login API',
+'Create JWT authentication and login endpoint.',
+'High',
+'In Progress',
+'2026-07-28',
+'2026-07-31',
+16),
+
+(2,
+'Conduct Employee Interview',
+'Schedule and complete technical interviews.',
+'Medium',
+'Pending',
+'2026-07-29',
+'2026-08-01',
+8),
+
+(3,
+'Prepare Financial Report',
+'Generate monthly finance report.',
+'High',
+'Completed',
+'2026-07-20',
+'2026-07-25',
+20),
+
+(4,
+'Implement Task Module',
+'Develop CRUD APIs for Employee Tasks.',
+'High',
+'In Progress',
+'2026-07-27',
+'2026-08-02',
+24),
+
+(5,
+'Client Presentation',
+'Prepare project presentation for client meeting.',
+'Low',
+'Pending',
+'2026-07-30',
+'2026-08-03',
+6),
+
+(1,
+'Bug Fixing',
+'Resolve production issues reported by QA.',
+'Medium',
+'Pending',
+'2026-07-28',
+'2026-07-30',
+10),
+
+(4,
+'Code Review',
+'Review pull requests from junior developers.',
+'Low',
+'Completed',
+'2026-07-22',
+'2026-07-22',
+4);
